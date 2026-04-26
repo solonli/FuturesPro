@@ -1,35 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
-from sqlalchemy.orm import sessionmaker
 
 from app.config import settings
-
-# 创建异步数据库引擎
-engine = create_async_engine(
-    settings.database_url,
-    echo=settings.debug,
-    future=True
-)
-
-# 创建异步会话工厂
-AsyncSessionLocal = sessionmaker(
-    engine,
-    class_=AsyncSession,
-    expire_on_commit=False,
-    autocommit=False,
-    autoflush=False
-)
-
-
-async def get_db():
-    """获取数据库会话"""
-    async with AsyncSessionLocal() as session:
-        try:
-            yield session
-        finally:
-            await session.close()
-
 
 # 创建FastAPI应用实例
 app = FastAPI(
@@ -42,7 +14,7 @@ app = FastAPI(
 # 配置CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins,
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:5174", "http://127.0.0.1:5174"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

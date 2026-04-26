@@ -1,5 +1,4 @@
 import socketio
-from app.core.cache import get_redis
 
 # 创建Socket.IO服务器
 sio = socketio.AsyncServer(

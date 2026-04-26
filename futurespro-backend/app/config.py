@@ -1,4 +1,4 @@
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 from typing import List
 
 
@@ -26,9 +26,10 @@ class Settings(BaseSettings):
     # CORS配置
     cors_origins: List[str] = ["http://localhost:3000", "http://127.0.0.1:3000"]
     
-    class Config:
-        env_file = ".env"
-        case_sensitive = False
+    model_config = {
+        "env_file": ".env",
+        "case_sensitive": False
+    }
 
 
 # 创建全局配置实例
