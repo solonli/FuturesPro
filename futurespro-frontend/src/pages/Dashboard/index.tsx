@@ -1,174 +1,238 @@
 import React from 'react';
+import { Card, Button, Space, Badge, Divider } from 'antd';
+import { 
+  WalletOutlined, 
+  DollarOutlined, 
+  TrendingUpOutlined, 
+  AlertOutlined, 
+  RocketOutlined,
+  BarChart2Outlined,
+  FileTextOutlined,
+  HistoryOutlined,
+  ZapOutlined,
+  RefreshOutlined
+} from '@ant-design/icons';
 
 const Dashboard: React.FC = () => {
   // 模拟数据
   const assets = [
     {
-      title: '账户余额',
-      value: '¥ 100,000.00',
-      change: '+2.5%',
+      title: '总资产',
+      value: '¥1,220,847',
+      change: '-12.5%',
+      changeType: 'negative',
+      icon: <WalletOutlined className="text-primary" />
+    },
+    {
+      title: '今日盈亏',
+      value: '¥98,450',
+      change: '+8.3%',
       changeType: 'positive',
-      subtitle: '今日'
+      icon: <DollarOutlined className="text-green-500" />
     },
     {
-      title: '总盈亏',
-      value: '¥ 5,280.00',
-      change: '+5.28%',
-      changeType: 'positive',
-      subtitle: '本月'
+      title: '当日最大回撤',
+      value: '¥42,180',
+      change: '-2.1%',
+      changeType: 'negative',
+      icon: <TrendingUpOutlined className="text-red-500" />
     },
     {
-      title: '持仓市值',
-      value: '¥ 65,320.00',
-      change: '3 个合约',
+      title: '今日交易次数',
+      value: '156',
+      change: '胜率 68%',
       changeType: 'neutral',
-      subtitle: ''
+      icon: <AlertOutlined className="text-yellow-500" />
+    }
+  ];
+
+  const quickActions = [
+    {
+      title: '快速下单',
+      icon: <RocketOutlined className="text-primary" />,
+      active: false
     },
     {
-      title: '可用资金',
-      value: '¥ 34,680.00',
-      change: '34.68%',
-      changeType: 'neutral',
-      subtitle: ''
+      title: '持仓详情',
+      icon: <BarChart2Outlined className="text-primary" />,
+      active: true
+    },
+    {
+      title: '策略管理',
+      icon: <FileTextOutlined className="text-primary" />,
+      active: false
+    },
+    {
+      title: '交易记录',
+      icon: <HistoryOutlined className="text-primary" />,
+      active: false
     }
   ];
 
   const positions = [
     {
-      symbol: '螺纹钢2510',
-      exchange: 'SHFE',
-      direction: '多头',
-      volume: 2,
-      avgPrice: 3850.00,
-      currentPrice: 3920.00,
-      pnl: '+1,400.00',
-      pnlType: 'positive'
-    },
-    {
-      symbol: '铜2509',
-      exchange: 'SHFE',
-      direction: '空头',
-      volume: 1,
-      avgPrice: 68500.00,
-      currentPrice: 67800.00,
-      pnl: '+7,000.00',
-      pnlType: 'positive'
-    },
-    {
-      symbol: '大豆2509',
-      exchange: 'DCE',
-      direction: '多头',
+      symbol: 'IF2504',
+      name: '沪深300期货',
+      direction: '做多',
       volume: 3,
-      avgPrice: 5200.00,
-      currentPrice: 5180.00,
-      pnl: '-600.00',
+      openPrice: 3850.2,
+      currentPrice: 3892.5,
+      pnl: '+¥12,690',
+      pnlType: 'positive'
+    },
+    {
+      symbol: 'IC2504',
+      name: '中证500期货',
+      direction: '做空',
+      volume: 2,
+      openPrice: 5420.0,
+      currentPrice: 5385.6,
+      pnl: '+¥6,888',
+      pnlType: 'positive'
+    },
+    {
+      symbol: 'RU2505',
+      name: '橡胶期货',
+      direction: '做多',
+      volume: 5,
+      openPrice: 14520,
+      currentPrice: 14380,
+      pnl: '-¥7,000',
       pnlType: 'negative'
     }
   ];
 
   const aiSignals = [
     {
-      symbol: '螺纹钢2510',
-      exchange: 'SHFE',
-      signal: '买入信号',
-      signalType: 'positive',
-      strength: 85,
-      time: '10:30 AM'
+      symbol: '螺纹钢RU2505',
+      pattern: '突破关键阻力位',
+      confidence: 92,
+      confidenceType: 'high'
     },
     {
-      symbol: '铜2509',
-      exchange: 'SHFE',
-      signal: '卖出信号',
-      signalType: 'negative',
-      strength: 78,
-      time: '11:15 AM'
+      symbol: '沪铜CU2505',
+      pattern: '形成头肩顶形态',
+      confidence: 87,
+      confidenceType: 'medium'
     },
     {
-      symbol: '大豆2509',
-      exchange: 'DCE',
-      signal: '持有信号',
-      signalType: 'neutral',
-      strength: 65,
-      time: '09:45 AM'
+      symbol: '原油SC2505',
+      pattern: 'MACD金叉',
+      confidence: 95,
+      confidenceType: 'high'
     }
   ];
 
   const marketNews = [
     {
-      title: '央行：保持流动性合理充裕',
-      source: '央行网站',
-      time: '10:00 AM'
+      symbol: 'IF2504',
+      name: '沪深300',
+      price: 3892.5,
+      change: '+1.10%',
+      changeType: 'positive'
     },
     {
-      title: '螺纹钢库存持续下降',
-      source: '钢联数据',
-      time: '09:30 AM'
-    },
-    {
-      title: '铜价创近期新高',
-      source: '上海有色网',
-      time: '08:45 AM'
-    },
-    {
-      title: '大豆进口量环比增加',
-      source: '农产品期货网',
-      time: '08:30 AM'
+      symbol: 'IC2504',
+      name: '中证500',
+      price: 5385.6,
+      change: '+0.63%',
+      changeType: 'positive'
     }
   ];
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">仪表盘</h1>
+      {/* 页面标题 */}
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-2xl font-bold text-text-primary">仪表盘</h1>
+          <p className="text-text-secondary text-sm">2026年4月26日 20:17</p>
+        </div>
+      </div>
       
       {/* 资产卡片 */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {assets.map((asset, index) => (
-          <div key={index} className="bg-[#1a1a2e] border border-[#2a2a4a] rounded-lg p-6">
-            <h3 className="text-[#a0a0b0] text-sm mb-2">{asset.title}</h3>
-            <p className="text-3xl font-mono font-bold">{asset.value}</p>
-            <p className={`text-sm mt-2 ${asset.changeType === 'positive' ? 'text-green-500' : asset.changeType === 'negative' ? 'text-red-500' : 'text-[#a0a0b0]'}`}>
-              {asset.change} {asset.subtitle}
-            </p>
-          </div>
+          <Card key={index} className="bg-[#1a1a2e]/80 border border-[#2a2a4a]/50 backdrop-blur-sm overflow-hidden relative">
+            <div className="absolute top-4 right-4">
+              {asset.icon}
+            </div>
+            <div className="mb-2 text-text-secondary text-sm">{asset.title}</div>
+            <div className="text-2xl font-mono font-bold text-text-primary mb-1">{asset.value}</div>
+            <div className={`text-sm ${asset.changeType === 'positive' ? 'text-green-500' : asset.changeType === 'negative' ? 'text-red-500' : 'text-text-secondary'}`}>
+              {asset.change}
+            </div>
+          </Card>
+        ))}
+      </div>
+      
+      {/* 快捷操作 */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        {quickActions.map((action, index) => (
+          <Card 
+            key={index} 
+            className={`cursor-pointer transition-all duration-300 ${action.active ? 'bg-primary/10 border-primary/30' : 'bg-[#1a1a2e]/50 border-[#2a2a4a]/30 hover:bg-[#1a1a2e]/80`}
+          >
+            <div className="flex flex-col items-center py-4">
+              <div className="text-2xl mb-2">{action.icon}</div>
+              <div className="text-text-primary">{action.title}</div>
+            </div>
+          </Card>
         ))}
       </div>
       
       {/* 主内容区域 */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* 持仓列表 */}
-        <div className="bg-[#1a1a2e] border border-[#2a2a4a] rounded-lg p-6 lg:col-span-2">
-          <h3 className="text-lg font-semibold mb-4">持仓列表</h3>
+        <div className="bg-[#1a1a2e]/80 border border-[#2a2a4a]/50 rounded-lg p-4 lg:col-span-2">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-semibold text-text-primary">当前持仓</h3>
+            <Space>
+              <Button className="bg-primary/10 border-primary/30 text-primary hover:bg-primary/20">
+                平仓全部
+              </Button>
+              <Button className="bg-green-500/10 border-green-500/30 text-green-500 hover:bg-green-500/20">
+                添加
+              </Button>
+            </Space>
+          </div>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-[#2a2a4a]">
-                  <th className="text-left py-3 px-4 text-sm font-medium text-[#a0a0b0]">合约</th>
-                  <th className="text-left py-3 px-4 text-sm font-medium text-[#a0a0b0]">方向</th>
-                  <th className="text-right py-3 px-4 text-sm font-medium text-[#a0a0b0]">持仓量</th>
-                  <th className="text-right py-3 px-4 text-sm font-medium text-[#a0a0b0]">持仓均价</th>
-                  <th className="text-right py-3 px-4 text-sm font-medium text-[#a0a0b0]">当前价</th>
-                  <th className="text-right py-3 px-4 text-sm font-medium text-[#a0a0b0]">盈亏</th>
+                <tr className="border-b border-[#2a2a4a]/50">
+                  <th className="text-left py-3 px-4 text-sm font-medium text-text-secondary">合约</th>
+                  <th className="text-left py-3 px-4 text-sm font-medium text-text-secondary">方向</th>
+                  <th className="text-right py-3 px-4 text-sm font-medium text-text-secondary">持仓量</th>
+                  <th className="text-right py-3 px-4 text-sm font-medium text-text-secondary">开仓价</th>
+                  <th className="text-right py-3 px-4 text-sm font-medium text-text-secondary">当前价</th>
+                  <th className="text-right py-3 px-4 text-sm font-medium text-text-secondary">浮动盈亏</th>
+                  <th className="text-right py-3 px-4 text-sm font-medium text-text-secondary">操作</th>
                 </tr>
               </thead>
               <tbody>
                 {positions.map((position, index) => (
-                  <tr key={index} className="border-b border-[#2a2a4a] hover:bg-[#1e1e3a]">
+                  <tr key={index} className="border-b border-[#2a2a4a]/30 hover:bg-[#1e1e3a]/50">
                     <td className="py-3 px-4">
                       <div>
-                        <p className="font-semibold">{position.symbol}</p>
-                        <p className="text-xs text-[#a0a0b0]">{position.exchange}</p>
+                        <p className="font-semibold text-text-primary">{position.symbol}</p>
+                        <p className="text-xs text-text-secondary">{position.name}</p>
                       </div>
                     </td>
                     <td className="py-3 px-4">
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${position.direction === '多头' ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'}`}>
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${position.direction === '做多' ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'}`}>
                         {position.direction}
                       </span>
                     </td>
-                    <td className="py-3 px-4 text-right font-mono">{position.volume}</td>
-                    <td className="py-3 px-4 text-right font-mono">{position.avgPrice.toLocaleString()}</td>
-                    <td className="py-3 px-4 text-right font-mono">{position.currentPrice.toLocaleString()}</td>
+                    <td className="py-3 px-4 text-right font-mono text-text-primary">{position.volume}手</td>
+                    <td className="py-3 px-4 text-right font-mono text-text-primary">{position.openPrice}</td>
+                    <td className="py-3 px-4 text-right font-mono text-text-primary">{position.currentPrice}</td>
                     <td className={`py-3 px-4 text-right font-mono font-bold ${position.pnlType === 'positive' ? 'text-green-500' : 'text-red-500'}`}>
                       {position.pnl}
+                    </td>
+                    <td className="py-3 px-4 text-right">
+                      <Button className="bg-red-500/10 border-red-500/30 text-red-500 hover:bg-red-500/20 text-xs">
+                        平仓
+                      </Button>
                     </td>
                   </tr>
                 ))}
@@ -177,50 +241,61 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
         
-        {/* AI信号 */}
-        <div className="bg-[#1a1a2e] border border-[#2a2a4a] rounded-lg p-6">
-          <h3 className="text-lg font-semibold mb-4">AI 信号</h3>
-          <div className="space-y-4">
-            {aiSignals.map((signal, index) => (
-              <div key={index} className="p-4 bg-[#1e1e3a] rounded-lg">
-                <div className="flex justify-between items-start mb-2">
-                  <div>
-                    <p className="font-semibold">{signal.symbol}</p>
-                    <p className="text-xs text-[#a0a0b0]">{signal.exchange}</p>
-                  </div>
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${signal.signalType === 'positive' ? 'bg-green-500/10 text-green-500' : signal.signalType === 'negative' ? 'bg-red-500/10 text-red-500' : 'bg-yellow-500/10 text-yellow-500'}`}>
-                    {signal.signal}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <div className="w-full bg-[#2a2a4a] rounded-full h-2 mr-4">
-                    <div 
-                      className={`h-2 rounded-full ${signal.signalType === 'positive' ? 'bg-green-500' : signal.signalType === 'negative' ? 'bg-red-500' : 'bg-yellow-500'}`}
-                      style={{ width: `${signal.strength}%` }}
-                    ></div>
-                  </div>
-                  <span className="text-xs text-[#a0a0b0]">{signal.strength}%</span>
-                </div>
-                <p className="text-xs text-[#a0a0b0] mt-2">{signal.time}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-      
-      {/* 市场动态 */}
-      <div className="bg-[#1a1a2e] border border-[#2a2a4a] rounded-lg p-6">
-        <h3 className="text-lg font-semibold mb-4">市场动态</h3>
-        <div className="space-y-4">
-          {marketNews.map((news, index) => (
-            <div key={index} className="flex justify-between items-start p-3 bg-[#1e1e3a] rounded-lg">
-              <div>
-                <p className="font-medium">{news.title}</p>
-                <p className="text-xs text-[#a0a0b0]">{news.source}</p>
-              </div>
-              <p className="text-xs text-[#a0a0b0]">{news.time}</p>
+        {/* 右侧栏 */}
+        <div className="space-y-6">
+          {/* AI智能信号 */}
+          <div className="bg-[#1a1a2e]/80 border border-[#2a2a4a]/50 rounded-lg p-4">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold text-text-primary flex items-center gap-2">
+                <ZapOutlined className="text-yellow-500" />
+                AI智能信号
+              </h3>
             </div>
-          ))}
+            <div className="space-y-4">
+              {aiSignals.map((signal, index) => (
+                <div key={index} className="p-3 bg-[#1e1e3a]/50 rounded-lg border border-[#2a2a4a]/30">
+                  <div className="flex justify-between items-start mb-2">
+                    <p className="font-semibold text-text-primary">{signal.symbol}</p>
+                    <Badge 
+                      status={signal.confidenceType === 'high' ? 'success' : 'warning'} 
+                      text={`置信度 ${signal.confidence}%`} 
+                      className="text-xs"
+                    />
+                  </div>
+                  <p className="text-sm text-text-secondary">{signal.pattern}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          {/* 市场动态 */}
+          <div className="bg-[#1a1a2e]/80 border border-[#2a2a4a]/50 rounded-lg p-4">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold text-text-primary">市场动态</h3>
+              <Button 
+                icon={<RefreshOutlined />} 
+                className="bg-transparent border-none text-text-secondary hover:bg-[#2a2a4a]"
+              >
+                刷新
+              </Button>
+            </div>
+            <div className="space-y-4">
+              {marketNews.map((news, index) => (
+                <div key={index} className="flex justify-between items-center p-3 bg-[#1e1e3a]/50 rounded-lg border border-[#2a2a4a]/30">
+                  <div>
+                    <p className="font-semibold text-text-primary">{news.symbol}</p>
+                    <p className="text-xs text-text-secondary">{news.name}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-mono text-text-primary">{news.price}</p>
+                    <p className={`text-xs ${news.changeType === 'positive' ? 'text-green-500' : 'text-red-500'}`}>
+                      {news.change}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
