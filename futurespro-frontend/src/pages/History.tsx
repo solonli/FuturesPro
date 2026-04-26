@@ -139,25 +139,58 @@ const History: React.FC = () => {
     const option = {
       title: {
         text: '收益曲线',
-        left: 'center'
+        left: 'center',
+        textStyle: {
+          color: '#e0e0e0'
+        }
       },
       tooltip: {
-        trigger: 'axis'
+        trigger: 'axis',
+        backgroundColor: '#16213e',
+        borderColor: '#2a2a4a',
+        textStyle: {
+          color: '#e0e0e0'
+        }
       },
       legend: {
         data: ['单次收益', '累计收益'],
-        bottom: 10
+        bottom: 10,
+        textStyle: {
+          color: '#a0a0b0'
+        }
       },
       xAxis: {
         type: 'category',
         data: dates,
         axisLabel: {
-          rotate: 45
+          rotate: 45,
+          color: '#a0a0b0'
+        },
+        axisLine: {
+          lineStyle: {
+            color: '#2a2a4a'
+          }
         }
       },
       yAxis: {
         type: 'value',
-        name: '收益 (USDT)'
+        name: '收益 (USDT)',
+        nameTextStyle: {
+          color: '#a0a0b0'
+        },
+        axisLabel: {
+          color: '#a0a0b0'
+        },
+        axisLine: {
+          lineStyle: {
+            color: '#2a2a4a'
+          }
+        },
+        splitLine: {
+          lineStyle: {
+            color: '#1a1a2e'
+          }
+        }
       },
       series: [
         {
@@ -175,12 +208,13 @@ const History: React.FC = () => {
           smooth: true,
           lineStyle: {
             width: 2,
-            color: '#1890ff'
+            color: '#00D4FF'
           },
           symbol: 'circle',
           symbolSize: 6
         }
-      ]
+      ],
+      backgroundColor: 'transparent'
     };
 
     chartInstance.setOption(option);
@@ -373,29 +407,29 @@ const History: React.FC = () => {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">交易历史</h1>
+      <h1 className="text-2xl font-bold mb-6 text-text-primary">交易历史</h1>
 
       {/* 收益曲线图表 */}
-      <Card className="mb-6">
+      <Card className="mb-6 bg-dark-300 border border-color-border">
         <div id="profit-chart" style={{ height: 400 }}></div>
       </Card>
 
       {/* 筛选条件 */}
-      <Card className="mb-6">
-        <h2 className="text-lg font-semibold mb-4">筛选条件</h2>
+      <Card className="mb-6 bg-dark-300 border border-color-border">
+        <h2 className="text-lg font-semibold mb-4 text-text-primary">筛选条件</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <p className="mb-2 text-sm">日期范围</p>
+            <p className="mb-2 text-sm text-text-secondary">日期范围</p>
             <DatePicker.RangePicker 
-              className="w-full" 
+              className="w-full bg-dark-400 border border-color-border text-text-primary" 
               value={dateRange}
               onChange={(dates) => setDateRange(dates as [dayjs.Dayjs | null, dayjs.Dayjs | null])}
             />
           </div>
           <div>
-            <p className="mb-2 text-sm">交易对</p>
+            <p className="mb-2 text-sm text-text-secondary">交易对</p>
             <Select 
-              className="w-full" 
+              className="w-full bg-dark-400 border border-color-border text-text-primary" 
               placeholder="选择交易对" 
               value={symbol}
               onChange={setSymbol}
@@ -404,9 +438,9 @@ const History: React.FC = () => {
             />
           </div>
           <div>
-            <p className="mb-2 text-sm">交易方向</p>
+            <p className="mb-2 text-sm text-text-secondary">交易方向</p>
             <Select 
-              className="w-full" 
+              className="w-full bg-dark-400 border border-color-border text-text-primary" 
               placeholder="选择交易方向" 
               value={side}
               onChange={setSide}
@@ -415,9 +449,9 @@ const History: React.FC = () => {
             />
           </div>
           <div>
-            <p className="mb-2 text-sm">状态</p>
+            <p className="mb-2 text-sm text-text-secondary">状态</p>
             <Select 
-              className="w-full" 
+              className="w-full bg-dark-400 border border-color-border text-text-primary" 
               placeholder="选择状态" 
               value={status}
               onChange={setStatus}
@@ -426,11 +460,12 @@ const History: React.FC = () => {
             />
           </div>
           <div>
-            <p className="mb-2 text-sm">搜索</p>
+            <p className="mb-2 text-sm text-text-secondary">搜索</p>
             <Input 
               placeholder="搜索交易对或ID" 
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
+              className="w-full bg-dark-400 border border-color-border text-text-primary"
             />
           </div>
           <div className="flex items-end">
@@ -439,12 +474,14 @@ const History: React.FC = () => {
                 type="primary" 
                 icon={<FilterOutlined />} 
                 onClick={handleFilter}
+                className="bg-primary hover:bg-primary/80"
               >
                 筛选
               </Button>
               <Button 
                 icon={<DownloadOutlined />} 
                 onClick={handleExport}
+                className="bg-dark-400 hover:bg-dark-500 text-text-primary"
               >
                 导出
               </Button>
@@ -454,12 +491,14 @@ const History: React.FC = () => {
       </Card>
 
       {/* 交易历史表格 */}
-      <Card>
+      <Card className="bg-dark-300 border border-color-border">
         <Table 
           columns={columns} 
           dataSource={filteredHistory} 
           rowKey="id"
           pagination={{ pageSize: 10 }}
+          className="text-text-primary"
+          tableLayout="auto"
         />
       </Card>
 
@@ -469,9 +508,10 @@ const History: React.FC = () => {
         open={editModalVisible}
         onOk={handleSaveEdit}
         onCancel={() => setEditModalVisible(false)}
+        className="bg-dark-300 border border-color-border text-text-primary"
       >
         {/* 这里可以添加编辑表单 */}
-        <p>编辑功能开发中...</p>
+        <p className="text-text-primary">编辑功能开发中...</p>
       </Modal>
     </div>
   );

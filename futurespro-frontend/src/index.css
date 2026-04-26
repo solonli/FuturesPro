@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary: #00D4FF;
+  --secondary: #6366F1;
+  --dark-100: #e0e0e0;
+  --dark-200: #a0a0b0;
+  --dark-300: #1a1a2e;
+  --dark-400: #16213e;
+  --dark-500: #0f0f1a;
+  --text-primary: #e0e0e0;
+  --text-secondary: #a0a0b0;
+  --color-border: #2a2a4a;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -9,9 +22,38 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--dark-500);
+  color: var(--text-primary);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+@layer utilities {
+  .text-text-primary {
+    color: var(--text-primary);
+  }
+  .text-text-secondary {
+    color: var(--text-secondary);
+  }
+  .bg-dark-100 {
+    background-color: var(--dark-100);
+  }
+  .bg-dark-200 {
+    background-color: var(--dark-200);
+  }
+  .bg-dark-300 {
+    background-color: var(--dark-300);
+  }
+  .bg-dark-400 {
+    background-color: var(--dark-400);
+  }
+  .bg-dark-500 {
+    background-color: var(--dark-500);
+  }
+  .border-color-border {
+    border-color: var(--color-border);
+  }
 }

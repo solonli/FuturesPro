@@ -148,16 +148,27 @@ const Radar: React.FC = () => {
       title: {
         text: '信号分布',
         left: 'center',
+        textStyle: {
+          color: '#e0e0e0'
+        }
       },
       tooltip: {
         trigger: 'axis',
         axisPointer: {
           type: 'shadow',
         },
+        backgroundColor: '#16213e',
+        borderColor: '#2a2a4a',
+        textStyle: {
+          color: '#e0e0e0'
+        }
       },
       legend: {
         data: ['买入信号', '卖出信号'],
         top: 30,
+        textStyle: {
+          color: '#a0a0b0'
+        }
       },
       grid: {
         left: '3%',
@@ -168,9 +179,30 @@ const Radar: React.FC = () => {
       xAxis: {
         type: 'category',
         data: symbols,
+        axisLabel: {
+          color: '#a0a0b0'
+        },
+        axisLine: {
+          lineStyle: {
+            color: '#2a2a4a'
+          }
+        }
       },
       yAxis: {
         type: 'value',
+        axisLabel: {
+          color: '#a0a0b0'
+        },
+        axisLine: {
+          lineStyle: {
+            color: '#2a2a4a'
+          }
+        },
+        splitLine: {
+          lineStyle: {
+            color: '#1a1a2e'
+          }
+        }
       },
       series: [
         {
@@ -190,6 +222,7 @@ const Radar: React.FC = () => {
           },
         },
       ],
+      backgroundColor: 'transparent'
     };
 
     chartInstance.current.setOption(option);
@@ -230,12 +263,13 @@ const Radar: React.FC = () => {
       <div className="flex flex-col gap-6">
         {/* 头部控制栏 */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <h1 className="text-2xl font-bold text-gray-800">AI 智能扫描</h1>
+          <h1 className="text-2xl font-bold text-text-primary">AI 智能扫描</h1>
           <div className="flex items-center gap-4">
             <Select
               value={scanInterval}
               onChange={setScanInterval}
               style={{ width: 120 }}
+              className="bg-dark-400 border border-color-border text-text-primary"
             >
               <Option value={1000}>1秒</Option>
               <Option value={3000}>3秒</Option>
@@ -248,6 +282,7 @@ const Radar: React.FC = () => {
               onClick={toggleScanning}
               loading={loading}
               icon={isScanning ? <PauseCircle size={18} /> : <PlayCircle size={18} />}
+              className="bg-primary hover:bg-primary/80"
             >
               {isScanning ? '停止扫描' : '开始扫描'}
             </Button>
@@ -255,6 +290,7 @@ const Radar: React.FC = () => {
               onClick={refreshSignals}
               loading={loading}
               icon={<RefreshCw size={18} />}
+              className="bg-dark-400 hover:bg-dark-500 text-text-primary"
             >
               刷新
             </Button>
@@ -268,17 +304,19 @@ const Radar: React.FC = () => {
             description={`AI 正在实时监控市场信号，扫描间隔: ${scanInterval / 1000}秒`}
             type="info"
             showIcon
+            className="bg-dark-300 border border-color-border text-text-primary"
           />
         )}
 
         {/* 过滤栏 */}
-        <Card title="信号筛选" className="mb-4">
+        <Card title="信号筛选" className="mb-4 bg-dark-300 border border-color-border">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <Select
               placeholder="信号类型"
               value={filters.type}
               onChange={(value) => handleFilterChange('type', value)}
               style={{ width: '100%' }}
+              className="bg-dark-400 border border-color-border text-text-primary"
             >
               <Option value="all">全部</Option>
               <Option value="buy">买入</Option>
@@ -289,6 +327,7 @@ const Radar: React.FC = () => {
               value={filters.strength}
               onChange={(value) => handleFilterChange('strength', value)}
               style={{ width: '100%' }}
+              className="bg-dark-400 border border-color-border text-text-primary"
             >
               <Option value="all">全部</Option>
               <Option value="80">80+</Option>
@@ -300,6 +339,7 @@ const Radar: React.FC = () => {
               value={filters.confidence}
               onChange={(value) => handleFilterChange('confidence', value)}
               style={{ width: '100%' }}
+              className="bg-dark-400 border border-color-border text-text-primary"
             >
               <Option value="all">全部</Option>
               <Option value="80">80+</Option>
@@ -311,26 +351,27 @@ const Radar: React.FC = () => {
               value={filters.symbol}
               onChange={(e) => handleFilterChange('symbol', e.target.value)}
               style={{ width: '100%' }}
+              className="bg-dark-400 border border-color-border text-text-primary"
             />
           </div>
         </Card>
 
         {/* 信号图表 */}
-        <Card title="信号分布" className="mb-4">
+        <Card title="信号分布" className="mb-4 bg-dark-300 border border-color-border">
           <div ref={chartRef} style={{ width: '100%', height: 400 }} />
         </Card>
 
         {/* 信号列表 */}
-        <Card title={`信号列表 (${filteredSignals.length})`}>
+        <Card title={`信号列表 (${filteredSignals.length})`} className="bg-dark-300 border border-color-border">
           {filteredSignals.length === 0 ? (
             <div className="text-center py-8">
-              <AlertTriangle size={48} className="mx-auto text-gray-400 mb-4" />
-              <p className="text-gray-500">暂无信号</p>
+              <AlertTriangle size={48} className="mx-auto text-text-secondary mb-4" />
+              <p className="text-text-secondary">暂无信号</p>
             </div>
           ) : (
             <div className="space-y-3">
               {filteredSignals.map((signal) => (
-                <div key={signal.id} className="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                <div key={signal.id} className="border border-color-border rounded-lg p-4 hover:bg-dark-400 transition-colors">
                   <div className="flex justify-between items-start">
                     <div>
                       <div className="flex items-center gap-2">
@@ -346,22 +387,22 @@ const Radar: React.FC = () => {
                         </Tag>
                       </div>
                       <div className="mt-2">
-                        <span className="font-semibold">{signal.symbol}</span>
-                        <span className="ml-4">价格: ${signal.price.toFixed(2)}</span>
-                        <span className="ml-4">成交量: {signal.volume.toFixed(2)}</span>
+                        <span className="font-semibold text-text-primary">{signal.symbol}</span>
+                        <span className="ml-4 text-text-secondary">价格: ${signal.price.toFixed(2)}</span>
+                        <span className="ml-4 text-text-secondary">成交量: {signal.volume.toFixed(2)}</span>
                       </div>
-                      <div className="mt-2 text-sm text-gray-600">
+                      <div className="mt-2 text-sm text-text-secondary">
                         模式: {signal.pattern}
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-sm text-gray-500">
+                      <div className="text-sm text-text-secondary">
                         {new Date(signal.timestamp).toLocaleTimeString()}
                       </div>
                       <Button
                         type="link"
                         icon={<Zap size={16} />}
-                        className="mt-2"
+                        className="mt-2 text-primary"
                       >
                         查看详情
                       </Button>
