@@ -12,11 +12,6 @@ const Sidebar: React.FC = () => {
       path: '/',
     },
     {
-      icon: <TrendingUp className="w-5 h-5" />,
-      label: '实时交易',
-      path: '/trading',
-    },
-    {
       icon: <BarChart2 className="w-5 h-5" />,
       label: '回测系统',
       path: '/backtest',

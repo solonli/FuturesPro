@@ -1,7 +1,6 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 import AppLayout from './components/layout/AppLayout';
 import Dashboard from './pages/Dashboard';
-import Trading from './pages/Trading';
 import Backtest from './pages/Backtest';
 import Radar from './pages/Radar';
 import Strategies from './pages/Strategies';
@@ -20,10 +19,6 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Dashboard />,
-      },
-      {
-        path: '/trading',
-        element: <Trading />,
       },
       {
         path: '/backtest',
