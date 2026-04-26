@@ -1,0 +1,40 @@
+# Web Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0.post1
+
+# Database
+sqlalchemy==1.4.49
+# asyncpg==0.28.0  # 暂时注释，Python 3.14兼容问题
+alembic==1.12.1
+
+# Redis
+redis==4.6.0
+
+# Async Tasks
+celery==5.3.4
+
+# Data Validation
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# Security
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.6
+
+# WebSocket
+python-socketio==5.10.0
+
+# Logging
+loguru==0.7.2
+
+# Utilities
+python-dotenv==1.0.0
+httpx==0.25.2
+
+# Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+
+# Backtesting
+backtrader==1.9.78.123
